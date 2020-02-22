@@ -55,68 +55,24 @@ multiply a by b, modifying b to be the product
 a*b -> b
 */
 void matrix_mult(struct matrix *a, struct matrix *b) {
+ double copy[b->rows][b->cols];
+    double sum;
 
-  /*
-  new_matrix(b->rows, b->cols);
-  for(int row = 0; row < b->rows; row++){
-    for(int col = 0; col < b->cols; col++){
-      
-    }
-  }
-  for (int x = 0; x < b->lastcol; x++){
-    for(int row = 0; row < a->rows; row++){
-      for(int col = 0; col < b->lastcol; col++){
-        b->m[col][x] *= a->m[row][col];
-      }
-    }
-  }
-  */
-
-  int currArow,currBrow,currBcol,counter,bool; // iteration for loop variables
-  counter = 1;
-  currArow = 0;
-  currBrow = 0;
-  currBcol = 0;
-  bool = 0;
-  double a_fact, b_fact; // temp factor variables for the multiplation
-  struct matrix *third;
-  third = new_matrix(a->rows, b->cols); // creating third matrix
-  int thirdRow = 0;
-  int thirdCol = 0;
-  int acol = 0;
-  while (acol < a->cols) {
-    a_fact = a->m[currArow][acol];
-    b_fact = b->m[currBrow][currBcol];
-
-    currBrow++; //going down the columns
-    third->m[thirdRow][thirdCol] += a_fact * b_fact;
-    acol++;
-    if (acol == a->cols && counter != a->rows * b->cols){
-      counter++;
-      if (currBcol + 1 == b->cols && currBrow == b->rows){
-        // printf("RESETING MATRIX B COLS" );
-        currBcol = 0;
-        currArow++;
-      } else {
-        currBcol++;
-      }
-        acol = 0;
-        currBrow = 0;
-        if ( thirdCol + 1 == third->cols && currBrow == b->rows){ // if at the end of the row restart and move to next row
-          thirdCol = 0;
-          thirdRow++;
-          third->m[thirdRow][thirdCol] = 0;
-          // printf("\nNeXT ROW %d\n", thirdRow);
-        } else { // if not at the end of the row go to the next empty space
-          thirdCol++;
-          third->m[thirdRow][thirdCol] = 0;
-          // printf("NeXT COL %d\n", thirdCol);
+    int i, j, k;
+    for (i = 0; i  <  b->rows; i++) {
+        for (j = 0; j  <  b->cols; j++) {
+            copy[i][j] = b->m[i][j];
         }
     }
-    if (counter/4 == a->rows * b->cols) {
-      printf("~Finishing matrix multi\n");
+
+    for (i = 0; i  <  b->rows; i++) {
+        for (j = 0; j  <  b->cols; j++) {
+            for (k = 0, sum = 0; k < 4; k++) {
+                sum += (a->m[i][k] * copy[k][j]);
+            }
+            b->m[i][j] = sum;
+        }
     }
-  }
 }
 
 
