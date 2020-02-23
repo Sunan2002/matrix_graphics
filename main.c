@@ -13,7 +13,7 @@ int main() {
   struct matrix *m1;
   struct matrix *m2;
 
-  /*
+  
   //Testing Code
   m2 = new_matrix(4, 2);
   printf("Testing add_edge. Adding (1, 2, 3), (4, 5, 6) m2 = ");
@@ -38,7 +38,7 @@ int main() {
   printf("\ntesting matrix mult. m1 * m2 =\n");
   matrix_mult(m1,m2);
   print_matrix(m2);
-  &*/
+  
 
   //Generating an Image
   screen s;

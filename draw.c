@@ -24,6 +24,7 @@ void add_point( struct matrix * points, double x, double y, double z) {
   points->m[0][points->lastcol] = x;
   points->m[1][points->lastcol] = y;
   points->m[2][points->lastcol] = z;
+  points->m[3][points->lastcol] = 1;
   points->lastcol++; 
 
 }

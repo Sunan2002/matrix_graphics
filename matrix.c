@@ -23,7 +23,7 @@ the template in the top comment
 void print_matrix(struct matrix *m) {
     for (int  i = 0; i < m->rows; i++){
         printf("\n  | ");
-        for (int j = 0; j < m->cols; j++){
+        for (int j = 0; j < m->lastcol; j++){
             printf("%d ", m->m[i][j]);
         }
         printf("|");
@@ -36,7 +36,7 @@ turns m in to an identity matrix
 */
 void ident(struct matrix *m) {
     for(int i = 0; i < m->rows; i++){
-        for(int j = 0; j < m->lastcol; j++){
+        for(int j = 0; j < m->cols; j++){
             if (i == j){
                 m->m[i][j] = 1;
             }
@@ -55,24 +55,22 @@ multiply a by b, modifying b to be the product
 a*b -> b
 */
 void matrix_mult(struct matrix *a, struct matrix *b) {
- double copy[b->rows][b->cols];
-    double sum;
+  double new[b->rows][b->cols];
+  double sum;
+  for (int i = 0; i  <  b->rows; i++) {
+      for (int j = 0; j  <  b->cols; j++) {
+          new[i][j] = b->m[i][j];
+      }
+  }
 
-    int i, j, k;
-    for (i = 0; i  <  b->rows; i++) {
-        for (j = 0; j  <  b->cols; j++) {
-            copy[i][j] = b->m[i][j];
-        }
-    }
-
-    for (i = 0; i  <  b->rows; i++) {
-        for (j = 0; j  <  b->cols; j++) {
-            for (k = 0, sum = 0; k < 4; k++) {
-                sum += (a->m[i][k] * copy[k][j]);
-            }
-            b->m[i][j] = sum;
-        }
-    }
+  for (int i = 0; i  <  b->rows; i++) {
+      for (int j = 0; j  <  b->cols; j++) {
+          for (int k = 0, sum = 0; k < 4; k++) {
+              sum += (a->m[i][k] * new[k][j]);
+          }
+          b->m[i][j] = sum;
+      }
+  }
 }
 
 
